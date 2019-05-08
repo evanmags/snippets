@@ -1,18 +1,22 @@
-
+#!/usr/bin/env node
 
 const fs = require('fs').promises;
 const inquire = require('inquirer');
 const openFile = require('./modules/openFile');
+const runProcess = require('./modules/process');
+const runCLI = require('./modules/CLI');
 
 async function main() {
-  // get name for new snippet
-  // get submit style
+  if (process.argv) runProcess(process.argv);
+  else runCLI();
   const answers = await inquire.prompt([
+    // get name for new snippet
     {
       type: 'input',
       name: 'name',
       message: 'Name your snippet',
     },
+    // get submit style
     {
       type: 'checkbox',
       name: 'entry_type',
@@ -23,6 +27,8 @@ async function main() {
 
   // new file for the submitted snippet
   const outfile = answers.name;
+
+  // source file to upload.
   let infile;
 
   if (answers.entry_type === 'Create a file') {
@@ -47,6 +53,31 @@ async function main() {
   }
 
   fs.writeFile(outfile, infile);
+
+  //  flow:
+  //  command line args?
+  //    yes:
+  //      usage: snippets <infile> <outfile> (submit)
+  //      usage: snippets <infile&outfile> (submit)
+  //      usage: snippets <name> (fetch)
+  //    no:
+  //      open CLI
+  //  control flow:
+  //    Submit:
+  //      get name of snippet
+  //      get submit style
+  //        if editor, open editor
+  //        else ask for infile
+  //      Log in to github/bitbucket/gitlab
+  //      check for 'snippets' repo
+  //        if exists, continue
+  //        else create one
+  //      create new branch named as snippet
+  //      push snippet to branch
+  //    Fetch:
+  //      authenticate
+  //      get name of snippet
+  //      pull
 }
 
 main();

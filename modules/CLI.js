@@ -1,5 +1,5 @@
-async function cli() {
+async function runCLI() {
   return new Error('nothing here');
 }
 
-module.exports = cli;
+module.exports = runCLI;

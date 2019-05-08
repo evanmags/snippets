@@ -4,10 +4,11 @@
   "description": "easy access to all of your code snippets",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node --no-warnings index.js",
+    "test": "jest"
   },
   "author": "evanmags",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "inquirer": "^6.2.2",
     "jest": "^24.8.0"

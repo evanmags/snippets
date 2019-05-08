@@ -1,7 +1,7 @@
 const openFile = require('../modules/openFile');
 
 test('returns file as string', () => {
-  return openFile({ filename: `${process.cwd()}/tests/index.test.js` }).then((data) => {
+  return openFile({ filename: `${process.cwd()}/tests/openFile.test.js` }).then((data) => {
     expect(typeof data).toBe('string');
   });
 });

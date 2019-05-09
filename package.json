@@ -2,9 +2,9 @@
   "name": "snippets",
   "version": "1.0.0",
   "description": "easy access to all of your code snippets",
-  "main": "index.js",
+  "main": "snippets.js",
   "scripts": {
-    "start": "node --no-warnings index.js",
+    "start": "node --no-warnings snippets.js",
     "test": "jest"
   },
   "author": "evanmags",

@@ -1,5 +1,4 @@
-#!/usr/bin/env node
-
+const snippetsInit = require('./modules/init');
 const getSnippet = require('./modules/getSnippet');
 const saveSnippet = require('./modules/saveSnippet');
 const runCLI = require('./modules/CLI');
@@ -20,6 +19,9 @@ async function main() {
     process.exit();
   }
 
+  // watch for -init (init/setup) flag
+  if (args.includes('-init')) return snippetsInit(args.slice(1));
+
   // watch for -g (get) flag
   if (args.includes('-g')) return getSnippet(args.slice(1));
 
@@ -34,32 +36,7 @@ async function main() {
     default:
       runCLI();
   }
-
-  //  flow:
-  //  command line args?
-  //    yes:
-  //      usage: snippets <infile> <outfile> (submit)
-  //      usage: snippets <infile&outfile> (submit)
-  //      usage: snippets <name> (fetch)
-  //    no:
-  //      open CLI
-  //  control flow:
-  //    Submit:
-  //      get name of snippet
-  //      get submit style
-  //        if editor, open editor
-  //        else ask for infile
-  //      Log in to github/bitbucket/gitlab
-  //      check for 'snippets' repo
-  //        if exists, continue
-  //        else create one
-  //      create new branch named as snippet
-  //      push snippet to branch
-  //    Fetch:
-  //      authenticate
-  //      get name of snippet
-  //      pull
   return null;
 }
 
-main();
+module.exports = main;

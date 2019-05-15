@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "easy access to all of your code snippets",
   "main": "snippets.js",
+  "bin": {
+    "snippets": "bin/snippets"
+  },
   "scripts": {
-    "start": "node --no-warnings snippets.js",
+    "start": "node --no-warnings snippets",
     "test": "jest"
   },
   "author": "evanmags",
@@ -12,6 +15,7 @@
   "dependencies": {
     "inquirer": "^6.2.2",
     "jest": "^24.8.0",
+    "keytar": "^4.6.0",
     "node-fetch": "^2.5.0"
   },
   "devDependencies": {

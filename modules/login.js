@@ -15,4 +15,8 @@ function getLoginInfo() {
   ]);
 }
 
-module.exports = getLoginInfo;
+function login() {
+  return getLoginInfo();
+}
+
+module.exports = { login };

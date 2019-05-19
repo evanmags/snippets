@@ -19,4 +19,4 @@ function login() {
   return getLoginInfo();
 }
 
-module.exports = { login };
+module.exports = login;

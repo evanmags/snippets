@@ -1,9 +1,9 @@
 const fetch = require('node-fetch');
-const getLoginInfo = require('./login');
+const login = require('./login');
 
 async function saveSnippet(files) {
   // get user authentication informaiton
-  const body = await getLoginInfo();
+  const body = await login();
   body.files = files;
 
   // connect to database i.e. server

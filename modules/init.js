@@ -4,18 +4,18 @@ const login = require('./login');
 async function snippetsInit() {
   // get user authentication informaiton
   const loginInfo = await login();
-  console.log(loginInfo.username);
-  const createUser = `mutation{
-    createUser(username: "${loginInfo.username}", hash: "${loginInfo.password}"){
+
+  const createUser = `mutation createUser($username: String!, $hash: String!){
+    createUser(username: $username, hash: $hash){
       username
+      _id
       hash
     }
   }`;
-
   // connect to database i.e. server
   // get snippet
-  const snippet = await fetch(`http://localhost:4000/graphQL?query=${createUser}`, {
-    method: 'post',
+  const snippet = await fetch('http://localhost:4000/graphql', {
+    method: 'POST',
     headers: {
       'Content-type': 'application/json',
       Accept: 'appication/json',
@@ -26,14 +26,14 @@ async function snippetsInit() {
     }),
   })
     .then((res) => {
-      if (res.ok) return res.json();
-      throw new Error(`${res.status}, ${res.statusText}`);
+      if (res.status === 200) return res.json();
+      throw new Error(`${res.status} ${res.statusText}`);
     })
     .catch((err) => {
       process.stdout.write(err.message);
       process.exit();
     });
-  process.stdout.write(`${JSON.stringify(snippet.data)}\n`);
+  process.stdout.write(`${JSON.stringify(snippet)}\n`);
   process.exit();
 }
 

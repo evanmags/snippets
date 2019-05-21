@@ -9,7 +9,7 @@ function getLoginInfo() {
     },
     {
       type: 'password',
-      name: 'password',
+      name: 'hash',
       message: 'Enter password: ',
     },
   ]);

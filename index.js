@@ -6,7 +6,6 @@ const runCLI = require('./modules/CLI');
 async function main() {
   // remove path information from argv
   const args = process.argv.slice(2);
-
   // watch for --help (help) flag
   if (args.includes('--help')) {
     [

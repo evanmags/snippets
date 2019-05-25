@@ -4,14 +4,7 @@ const Store = require('data-store');
 const store = new Store('snippets');
 
 async function getLoginInfo() {
-  if (store.get('username')) {
-    console.log(store);
-    return {
-      username: store.get('username'),
-      hash: store.get('hash'),
-    };
-  }
-  const info = await inquire.prompt([
+  return inquire.prompt([
     {
       type: 'input',
       name: 'username',
@@ -22,15 +15,22 @@ async function getLoginInfo() {
       name: 'hash',
       message: 'Enter password: ',
     },
-  ]);
-
-  store.set(info);
-  console.log('data-store', store);
-  return info;
+  ])
+    .then((info) => {
+      store.set(info);
+      return info;
+    });
 }
 
 async function login() {
-  return getLoginInfo();
+  return store.get('username')
+    ? {
+      username: store.get('username'),
+      hash: store.get('hash'),
+      // flag to allow catch if init is called when a user already exists.
+      exists: true,
+    }
+    : getLoginInfo();
 }
 
 module.exports = login;

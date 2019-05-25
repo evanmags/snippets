@@ -1,39 +1,32 @@
-const fetch = require('node-fetch');
+const Store = require('data-store');
 const login = require('./login');
+const makeRequest = require('./makeRequest');
+
+const store = new Store('snippets');
 
 async function snippetsInit() {
   // get user authentication informaiton
-  const loginInfo = await login();
+  const variables = await login();
+  // if (variables.exists) return;
 
-  const createUser = `mutation createUser($username: String!, $hash: String!){
-    createUser(username: $username, hash: $hash){
-      username
-      _id
-      hash
-    }
-  }`;
+  const body = {
+    query: `mutation createUser($username: String!, $hash: String!){
+      createUser(username: $username, hash: $hash){
+        username
+        _id
+        hash
+      }
+    }`,
+    variables,
+  };
   // connect to database i.e. server
   // get snippet
-  const snippet = await fetch('http://localhost:4000/graphql', {
-    method: 'POST',
-    headers: {
-      'Content-type': 'application/json',
-      Accept: 'appication/json',
-    },
-    body: JSON.stringify({
-      query: createUser,
-      variables: loginInfo,
-    }),
-  })
-    .then((res) => {
-      if (res.status === 200) return res.json();
-      throw new Error(`${res.status} ${res.statusText}`);
-    })
-    .catch((err) => {
-      process.stdout.write(err.message);
-      process.exit();
-    });
-  process.stdout.write(`${JSON.stringify(snippet)}\n`);
+  const res = await makeRequest(body);
+
+  // eslint-disable-next-line no-underscore-dangle
+  store.set({ id: res.data.createUser._id });
+
+  process.stdout.write(`${JSON.stringify(res.data)}\n`);
   process.exit();
 }
 

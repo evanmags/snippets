@@ -1,11 +1,14 @@
-const login = require('./login');
+const log = require('./log');
 const makeRequest = require('./makeRequest');
-const openFile = require('./openFile');
+const { readFile } = require('./openFile');
 
 async function saveSnippet(infile, outfile) {
   // get user authentication informaiton
-  const variables = await login();
-  variables.content = await openFile(infile);
+  const variables = await log.in();
+  variables.content = await readFile(infile)
+    .catch((err) => {
+      process.stdout.write(err);
+    });
   variables.title = outfile;
   variables.language = '';
   variables.tags = [''];
@@ -25,7 +28,7 @@ async function saveSnippet(infile, outfile) {
   // get snippet
   const snippet = await makeRequest(body);
 
-  process.stdout.write(`${JSON.stringify(snippet.data)}\n`);
+  process.stdout.write(`saveSnippet: ${JSON.stringify(snippet.data)}\n`);
   process.exit();
 }
 

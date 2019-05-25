@@ -1,12 +1,12 @@
 const Store = require('data-store');
-const login = require('./login');
+const log = require('./log');
 const makeRequest = require('./makeRequest');
 
 const store = new Store('snippets');
 
 async function snippetsInit() {
   // get user authentication informaiton
-  const variables = await login();
+  const variables = await log.in();
   // if (variables.exists) return;
 
   const body = {

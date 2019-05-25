@@ -3,6 +3,8 @@ const Store = require('data-store');
 
 const store = new Store('snippets');
 
+const log = {};
+
 async function getLoginInfo() {
   return inquire.prompt([
     {
@@ -22,7 +24,7 @@ async function getLoginInfo() {
     });
 }
 
-async function login() {
+log.in = async () => {
   return store.get('username')
     ? {
       username: store.get('username'),
@@ -31,6 +33,14 @@ async function login() {
       exists: true,
     }
     : getLoginInfo();
-}
+};
 
-module.exports = login;
+log.out = () => {
+  store.set({
+    username: null,
+    hash: null,
+  });
+};
+
+
+module.exports = log;

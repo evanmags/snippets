@@ -1,6 +1,7 @@
 const snippetsInit = require('./modules/init');
 const getSnippet = require('./modules/getSnippet');
 const saveSnippet = require('./modules/saveSnippet');
+const log = require('./modules/log');
 const runCLI = require('./modules/CLI');
 
 async function main() {
@@ -19,23 +20,33 @@ async function main() {
   }
 
   // watch for -init (init/setup) flag
-  if (args.includes('-init')) return snippetsInit(args.slice(1));
+  if (args.includes('-init')) return snippetsInit();
+
+  if (args.includes('-logout')) return log.out();
 
   // watch for -g (get) flag
-  if (args.includes('-g')) return getSnippet(args.slice(1));
+  if (args.includes('-g')) {
+    // determine correct in and out file;
+    switch (args.length) {
+      case 2:
+        return getSnippet(args[1], args[1]);
+      case 3:
+        return getSnippet(args[1], args[2]);
+      default:
+        return getSnippet(args[1]);
+    }
+  }
 
+  // default to saving snippets
   // determine correct in and out file;
   switch (args.length) {
     case 1:
-      saveSnippet(args[0], args[0]);
-      break;
+      return saveSnippet(args[0], args[0]);
     case 2:
-      saveSnippet(args[0], args[1]);
-      break;
+      return saveSnippet(args[0], args[1]);
     default:
-      runCLI();
+      return runCLI();
   }
-  return null;
 }
 
 module.exports = main;

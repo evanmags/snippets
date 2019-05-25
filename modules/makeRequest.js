@@ -6,8 +6,8 @@ const fetch = require('node-fetch');
 //   variables: object,
 // };
 
-function makeRequest(body) {
-  return fetch('http://localhost:4000/graphql', {
+async function makeRequest(body) {
+  const data = await fetch('http://localhost:4000/graphql', {
     method: 'POST',
     headers: {
       'Content-type': 'application/json',
@@ -15,14 +15,12 @@ function makeRequest(body) {
     },
     body: JSON.stringify(body),
   })
-    .then((res) => {
-      if (res.status === 200) return res.json();
-      throw new Error(`${res.status} ${res.statusText}`);
-    })
+    .then((res) => { return res.json(); })
     .catch((err) => {
-      process.stdout.write(err.message);
+      process.stdout.write(`Request Error (in function makeRequest): ${err}`);
       process.exit();
     });
+  return data;
 }
 
 module.exports = makeRequest;

@@ -1,7 +1,17 @@
 const inquire = require('inquirer');
+const Store = require('data-store');
 
-function getLoginInfo() {
-  return inquire.prompt([
+const store = new Store('snippets');
+
+async function getLoginInfo() {
+  if (store.get('username')) {
+    console.log(store);
+    return {
+      username: store.get('username'),
+      hash: store.get('hash'),
+    };
+  }
+  const info = await inquire.prompt([
     {
       type: 'input',
       name: 'username',
@@ -13,9 +23,13 @@ function getLoginInfo() {
       message: 'Enter password: ',
     },
   ]);
+
+  store.set(info);
+  console.log('data-store', store);
+  return info;
 }
 
-function login() {
+async function login() {
   return getLoginInfo();
 }
 

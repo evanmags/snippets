@@ -3,9 +3,7 @@ const Store = require('data-store');
 
 const store = new Store('snippets');
 
-const log = {};
-
-async function getLoginInfo() {
+function getLoginInfo() {
   return inquire.prompt([
     {
       type: 'input',
@@ -24,23 +22,23 @@ async function getLoginInfo() {
     });
 }
 
-log.in = async () => {
-  return store.get('username')
-    ? {
-      username: store.get('username'),
-      hash: store.get('hash'),
-      // flag to allow catch if init is called when a user already exists.
-      exists: true,
-    }
-    : getLoginInfo();
+const log = {
+  in: async () => {
+    return store.get('username')
+      ? {
+        username: store.get('username'),
+        hash: store.get('hash'),
+        // flag to allow catch if init is called when a user already exists.
+        exists: true,
+      }
+      : getLoginInfo();
+  },
+  out: () => {
+    store.set({
+      username: null,
+      hash: null,
+    });
+  },
 };
-
-log.out = () => {
-  store.set({
-    username: null,
-    hash: null,
-  });
-};
-
 
 module.exports = log;

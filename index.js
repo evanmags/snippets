@@ -2,6 +2,7 @@ const snippetsInit = require('./modules/init');
 const getSnippet = require('./modules/getSnippet');
 const saveSnippet = require('./modules/saveSnippet');
 const log = require('./modules/log');
+const listSnippets = require('./modules/list');
 const runCLI = require('./modules/CLI');
 
 async function main() {
@@ -19,6 +20,7 @@ async function main() {
     process.exit();
   }
 
+  if (args.includes('-list')) return listSnippets();
   // watch for -init (init/setup) flag
   if (args.includes('-init')) return snippetsInit();
 

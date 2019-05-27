@@ -28,7 +28,7 @@ async function saveSnippet(infile, outfile) {
   // get snippet
   const snippet = await makeRequest(body);
 
-  process.stdout.write(`saveSnippet: ${JSON.stringify(snippet.data)}\n`);
+  process.stdout.write(`saveSnippet: ${snippet.data.saveSnippet.content}\n`);
   process.exit();
 }
 

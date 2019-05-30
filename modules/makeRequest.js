@@ -18,7 +18,7 @@ async function makeRequest(body) {
     .then((res) => { return res.json(); })
     .catch((err) => {
       process.stdout.write(`Request Error (in function makeRequest): ${err}`);
-      process.exit();
+      process.exit(1);
     });
   return data;
 }

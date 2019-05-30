@@ -20,9 +20,10 @@ async function main() {
     process.exit();
   }
 
-  if (args.includes('-list')) return listSnippets();
   // watch for -init (init/setup) flag
   if (args.includes('-init')) return snippetsInit();
+
+  if (args.includes('-list')) return listSnippets();
 
   if (args.includes('-logout')) return log.out();
 

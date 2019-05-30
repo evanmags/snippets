@@ -1,6 +1,6 @@
 const fs = require('fs').promises;
 const inquire = require('inquirer');
-const openFile = require('./openFile');
+const { readFile } = require('./openFile');
 
 async function runCLI() {
   const answers = await inquire
@@ -46,9 +46,10 @@ async function runCLI() {
           message: 'What file would you like to upload?',
         },
       ])
-      .then(openFile)
+      .then((res) => { return readFile(res.filename); })
       .catch((err) => {
-        return process.stdout.write(err);
+        process.stdout.write(err.message);
+        process.exit();
       });
   }
 

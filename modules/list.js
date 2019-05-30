@@ -6,8 +6,8 @@ async function listSnippets() {
   const variables = await log.in();
 
   const body = {
-    query: `query listUserSnippets($username: String!, $hash: String!){
-      listUserSnippets(username: $username, hash: $hash){
+    query: `query getUser($username: String!, $hash: String!){
+      getUser(username: $username, hash: $hash){
         snippets { title }
       }
     }`,
@@ -16,10 +16,12 @@ async function listSnippets() {
   // connect to database i.e. server
   // get snippet
   const list = await makeRequest(body)
-    .then((query) => {
-      return query.data.listUserSnippets.snippets;
+    .catch((err) => {
+      process.stdout.write(err.errors.message);
     })
-    .catch((err) => { console.log(err); })
+    .then((query) => {
+      return query.data.getUser.snippets;
+    })
     .then((data) => {
       let string = '';
       data.forEach(({ title }, i) => {
@@ -27,6 +29,9 @@ async function listSnippets() {
         string += (i + 1) % 3 === 0 ? '\n' : '';
       });
       return string;
+    })
+    .catch((err) => {
+      process.stdout.write(err.message);
     });
 
   process.stdout.write(`${list}\n`);

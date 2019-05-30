@@ -19,12 +19,19 @@ async function getSnippet(title, file) {
   // connect to database i.e. server
   // get snippet
   const snippet = await makeRequest(body)
+    .catch((err) => {
+      process.stdout.write(
+        `Failed to retrieve snippet ${title}; Please try again.\n${err.toString()}`,
+      );
+      process.exit();
+    })
     .then((query) => {
       const outfile = file || title;
       try {
         writeFile(outfile, query.data.getSnippet.content);
       } catch (err) {
-        process.stdout.write(`could not write to file: ${outfile}\n${err}`);
+        process.stdout.write(`Could not write to file: ${outfile}\n${err.toString()}`);
+        process.exit(1);
       }
       return query;
     });

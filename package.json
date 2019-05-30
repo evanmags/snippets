@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "node --no-warnings snippets",
-    "test": "jest"
+    "test": "jest --detectOpenHandles"
   },
   "author": "evanmags",
   "license": "MIT",

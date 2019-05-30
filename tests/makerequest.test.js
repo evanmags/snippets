@@ -37,6 +37,13 @@ test('accepts valid graphQL query', async () => {
   });
 });
 
+test('returns expected data', async () => {
+  return makeRequest({ query: 'query { hello }' }).then((data) => {
+    expect(data.data).toBeDefined();
+    expect(data.data.hello).toMatch(/hello world/);
+  });
+});
+
 test('rejects invalid graphQL query', async () => {
   return makeRequest({ badquery, variables }).then((data) => {
     expect(data.errors).toBeDefined();

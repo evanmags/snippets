@@ -25,12 +25,11 @@ async function saveSnippet(infile, outfile) {
   };
   // connect to database i.e. server
   // get snippet
-  const snippet = await makeRequest(body).catch((err) => {
+  await makeRequest(body).catch((err) => {
     process.stdout.write(`Failed to save snippet ${outfile}; Please try again.\n${err.toString()}`);
     process.exit();
   });
 
-  process.stdout.write(`saveSnippet: ${snippet.data.saveSnippet.content}\n`);
   process.exit();
 }
 

@@ -3,7 +3,7 @@ const getSnippet = require('./modules/getSnippet');
 const saveSnippet = require('./modules/saveSnippet');
 const log = require('./modules/log');
 const listSnippets = require('./modules/list');
-const runCLI = require('./modules/CLI');
+const CLIcontroller = require('./modules/cmdLine');
 
 async function main() {
   // remove path information from argv
@@ -48,7 +48,7 @@ async function main() {
     case 2:
       return saveSnippet(args[0], args[1]);
     default:
-      return runCLI();
+      return CLIcontroller();
   }
 }
 

@@ -21,12 +21,16 @@ async function snippetsInit() {
   };
   // connect to database i.e. server
   // get snippet
-  const res = await makeRequest(body);
+  await makeRequest(body)
+    .then((res) => {
+      console.log(res);
+      // eslint-disable-next-line no-underscore-dangle
+      store.set({ id: res.data.createUser._id });
+    })
+    .catch((err) => {
+      process.stdout.write(`${err.message}\n`);
+    });
 
-  // eslint-disable-next-line no-underscore-dangle
-  store.set({ id: res.data.createUser._id });
-
-  process.stdout.write(`${JSON.stringify(res.data)}\n`);
   process.exit();
 }
 

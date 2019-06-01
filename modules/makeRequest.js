@@ -16,6 +16,15 @@ async function makeRequest(body) {
     body: JSON.stringify(body),
   })
     .then((res) => { return res.json(); })
+    .then((res) => {
+      if (res.errors) {
+        res.errors.forEach((error) => {
+          process.stdout.write(`saveSnippet: ${error.message}\n`);
+        });
+      }
+      if (res.data) return res;
+      return process.exit(1);
+    })
     .catch((err) => {
       process.stdout.write(`Request Error (in function makeRequest): ${err}`);
       process.exit(1);

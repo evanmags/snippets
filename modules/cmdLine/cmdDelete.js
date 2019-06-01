@@ -13,9 +13,10 @@ async function cmdDelete() {
   ]);
 
   const body = {
-    query: `query deleteSnippet($username: String!, $hash: String!, $title: String!){
+    query: `mutation deleteSnippet($username: String!, $hash: String!, $title: String!){
       deleteSnippet(username: $username, hash: $hash, title: $title){
-        snippet
+        title
+        content
       }
     }`,
     variables: {
@@ -25,13 +26,20 @@ async function cmdDelete() {
   };
 
   await makeRequest(body)
-    .then(() => {
-      process.stdout.write(`Snippet: ${responses.title} successfully deleted.`);
+    .then((res) => {
+      if (res.errors) {
+        res.errors.forEach((error) => {
+          process.stdout.write(`saveSnippet: ${error.message}\n`);
+        });
+      }
+      process.stdout.write(`Snippets: ${responses.title} successfully deleted.\n`);
       process.exit();
     })
     .catch((err) => {
-      process.stdout.write(`Snippet: ${responses.title} could not be deleted, please try again.`);
-      process.stdout.write(err.message);
+      process.stdout.write(
+        `Snippets: ${responses.title} could not be deleted, please try again.\n`,
+      );
+      process.stdout.write(`${err.message}\n`);
       process.exit();
     });
 }

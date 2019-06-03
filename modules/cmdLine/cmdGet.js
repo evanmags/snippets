@@ -18,7 +18,7 @@ async function cmdGet() {
       return data.getUser.snippets;
     });
 
-  const responses = await inquire.prompt([
+  const { title, file } = await inquire.prompt([
     {
       type: 'list',
       name: 'title',
@@ -32,7 +32,7 @@ async function cmdGet() {
     },
   ]);
 
-  return getSnippet(responses.title, responses.file);
+  return getSnippet(title, file);
 }
 
 module.exports = cmdGet;

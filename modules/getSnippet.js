@@ -21,7 +21,7 @@ async function getSnippet(title, file) {
   await makeRequest(body)
     .catch((err) => {
       process.stdout.write(
-        `Failed to retrieve snippet ${title}; Please try again.\n${err.toString()}`,
+        `Failed to retrieve snippet ${title}; Please try again.\n${err.toString()}\n`,
       );
       process.exit();
     })
@@ -36,7 +36,7 @@ async function getSnippet(title, file) {
       return query;
     });
 
-  process.stdout.write(`getSnippet: snippet, ${file || title}, successfully added to ${file}`);
+  process.stdout.write(`getSnippet: snippet, ${file || title}, successfully added to ${file}\n`);
   process.exit();
 }
 

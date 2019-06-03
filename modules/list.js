@@ -25,7 +25,7 @@ async function listSnippets() {
     .then((data) => {
       let string = '';
       data.forEach(({ title }, i) => {
-        string += `${title}\t`;
+        string += `${title}\t\t`;
         string += (i + 1) % 3 === 0 ? '\n' : '';
       });
       return string;

@@ -19,7 +19,7 @@ async function makeRequest(body) {
     .then((res) => {
       if (res.errors) {
         res.errors.forEach((error) => {
-          process.stdout.write(`saveSnippet: ${error.message}\n`);
+          process.stdout.write(`makeRequest:\t${error.message}\n\t\tIn ${error.path} (${error.locations[0].line}:${error.locations[0].column})\n`);
         });
       }
       if (res.data) return res;

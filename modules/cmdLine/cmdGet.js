@@ -1,29 +1,17 @@
 const inquire = require('inquirer');
 const getSnippet = require('../getSnippet');
-const log = require('../log');
-const makeRequest = require('../makeRequest');
 
-async function cmdGet() {
-  const variables = await log.in();
-  const body = {
-    query: `query getUser($username: String!, $hash: String!){
-      getUser(username: $username, hash: $hash){
-        snippets { title }
-      }
-    }`,
-    variables,
-  };
-  const snippetList = await makeRequest(body)
-    .then(({ data }) => {
-      return data.getUser.snippets;
-    });
+async function cmdGet(user) {
+  const snippetChoiceList = user.snippets.length > 0
+    ? user.snippets.map(({ title, _id }) => { return { name: title, value: _id }; })
+    : [{ name: 'You have no snippets to retrieve, press enter to exit.', value: null }];
 
-  const { title, file } = await inquire.prompt([
+  const { snippetID, file } = await inquire.prompt([
     {
       type: 'list',
-      name: 'title',
+      name: 'snippetID',
       message: 'Which snippet would you like to get?',
-      choices: snippetList.map((snippet) => { return snippet.title; }),
+      choices: snippetChoiceList,
     },
     {
       type: 'input',
@@ -31,8 +19,9 @@ async function cmdGet() {
       message: 'Which file would you like to add it too?',
     },
   ]);
+  if (snippetID === null) process.exit();
 
-  return getSnippet(title, file);
+  return getSnippet(snippetID, file);
 }
 
 module.exports = cmdGet;

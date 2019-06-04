@@ -1,27 +1,32 @@
 const inquire = require('inquirer');
-const log = require('../log');
 const makeRequest = require('../makeRequest');
 
-async function cmdDelete() {
-  const login = await log.in();
+async function cmdDelete(user) {
+  const snippetChoiceList = user.snippets.length > 0
+    ? user.snippets.map(({ title, _id }) => { return { name: title, value: _id }; })
+    : [{ name: 'You have no snippets to delete, press enter to exit.', value: null }];
+
   const responses = await inquire.prompt([
     {
-      type: 'input',
-      name: 'title',
+      type: 'list',
+      name: 'snippetID',
       message: 'Which snippet would you like to delete?',
+      choices: snippetChoiceList,
     },
   ]);
+  if (responses.title === null) process.exit();
 
   const body = {
-    query: `mutation deleteSnippet($username: String!, $hash: String!, $title: String!){
-      deleteSnippet(username: $username, hash: $hash, title: $title){
+    query: `mutation deleteSnippet($userID: String!, $snippetID: String!){
+      deleteSnippet(userID: $userID, snippetID: $snippetID){
         title
         content
       }
     }`,
     variables: {
-      ...login,
-      ...responses,
+      // eslint-disable-next-line no-underscore-dangle
+      userID: user._id,
+      snippetID: responses.snippetID,
     },
   };
 

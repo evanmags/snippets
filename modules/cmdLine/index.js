@@ -3,29 +3,10 @@ const cmdDelete = require('./cmdDelete');
 const cmdUpdate = require('./cmdUpdate');
 const cmdSave = require('./cmdSave');
 const cmdGet = require('./cmdGet');
-const log = require('../log');
-const makeRequest = require('../makeRequest');
+const getUser = require('../gqlQueries/getUser');
 
 async function CLIcontroller() {
-  const loginInfo = await log.in();
-
-  const body = {
-    query: `query getUser($username: String!, $hash: String!){
-      getUser(username: $username, hash: $hash){
-        _id
-        snippets{
-          title
-          language
-          _id
-          tags
-        }
-      }
-    }`,
-    variables: loginInfo,
-  };
-  // create session
-  const user = await makeRequest(body)
-    .then(({ data }) => { return data.getUser; });
+  const user = await getUser();
 
   const mode = await inquire.prompt([
     {

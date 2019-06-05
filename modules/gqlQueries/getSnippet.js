@@ -31,7 +31,6 @@ async function getSnippet(snippetID, file) {
         process.stdout.write(`Could not write to file: ${outfile}\n${err.toString()}\n`);
         process.exit(1);
       }
-      return query;
     });
 
   process.stdout.write(`getSnippet: snippet successfully added to ${file}\n`);

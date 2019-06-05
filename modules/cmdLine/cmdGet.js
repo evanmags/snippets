@@ -1,5 +1,5 @@
 const inquire = require('inquirer');
-const getSnippet = require('../getSnippet');
+const getSnippet = require('../gqlQueries/getSnippet');
 
 async function cmdGet(user) {
   const snippetChoiceList = user.snippets.length > 0

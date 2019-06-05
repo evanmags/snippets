@@ -1,26 +1,12 @@
-const log = require('./log');
-const makeRequest = require('./makeRequest');
+const getUser = require('./gqlQueries/getUser');
 
 async function listSnippets() {
-  // get user authentication informaiton
-  const variables = await log.in();
-
-  const body = {
-    query: `query getUser($username: String!, $hash: String!){
-      getUser(username: $username, hash: $hash){
-        snippets { title }
-      }
-    }`,
-    variables,
-  };
-  // connect to database i.e. server
-  // get snippet
-  const list = await makeRequest(body)
+  const list = await getUser()
     .catch((err) => {
       process.stdout.write(err.errors.message);
     })
-    .then((query) => {
-      return query.data.getUser.snippets;
+    .then((user) => {
+      return user.snippets;
     })
     .then((data) => {
       let string = '';

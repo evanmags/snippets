@@ -25,9 +25,9 @@ async function CLIcontroller() {
   // need to pass user to all other functions to avoid making more requests than necessary.
   // will require restructuring all requests and command line functions.
   switch (mode) {
-    case 'save': return cmdSave();
+    case 'save': return cmdSave(user);
     case 'get': return cmdGet(user);
-    case 'update': return cmdUpdate();
+    case 'update': return cmdUpdate(user);
     case 'delete': return cmdDelete(user);
     default: return CLIcontroller();
   }

@@ -17,7 +17,6 @@ async function cmdSave(user) {
   ]);
 
   if (title === '') return saveSnippet(user._id, file, file);
-
   return saveSnippet(user._id, file, title);
 }
 

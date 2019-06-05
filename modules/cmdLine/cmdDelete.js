@@ -1,6 +1,11 @@
 const inquire = require('inquirer');
 const deleteSnippet = require('../gqlQueries/deleteSnippet');
 
+/**
+ * gathers the query information necessary to execute the deleteSnippet mutation
+ * @param {User} user // as passed from mongoDB
+ */
+
 async function cmdDelete(user) {
   const snippetChoiceList = user.snippets.length > 0
     ? user.snippets.map(({ title, _id }) => { return { name: title, value: _id }; })

@@ -1,6 +1,11 @@
 const inquire = require('inquirer');
 const getSnippet = require('../gqlQueries/getSnippet');
 
+/**
+ * gathers information necessary to execute getSnippet query
+ * @param {User} user // as passed from mongoDB
+ */
+
 async function cmdGet(user) {
   const snippetChoiceList = user.snippets.length > 0
     ? user.snippets.map(({ title, _id }) => { return { name: title, value: _id }; })

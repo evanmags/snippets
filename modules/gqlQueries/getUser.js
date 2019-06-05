@@ -1,6 +1,11 @@
 const log = require('../log');
 const makeRequest = require('../makeRequest');
 
+/**
+ * gets user log in information locally then
+ * sends graphql request to get the whole user object from the database.
+ */
+
 async function getUser() {
   const variables = await log.in();
 

@@ -3,6 +3,13 @@ const makeRequest = require('../makeRequest');
 
 const store = new Store('snippets');
 
+/**
+ * sends graphql mutation query to create a user as part of init.
+ * stores data using data-store package
+ * @param {String} username
+ * @param {String} hash
+ */
+
 async function createUser(username, hash) {
   const body = {
     query: `mutation createUser($username: String!, $hash: String!){

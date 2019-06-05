@@ -1,5 +1,12 @@
 const makeRequest = require('../makeRequest');
 
+/**
+ * creates graphql query to delete a snippet from the database
+ * ids are strings representing mongoDB ObjectIDs
+ * @param {String} userID
+ * @param {String} snippetID
+ */
+
 async function deleteSnippet(userID, snippetID) {
   const body = {
     query: `mutation deleteSnippet($userID: String!, $snippetID: String!){

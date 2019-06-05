@@ -1,7 +1,6 @@
 const log = require('./log');
 const createUser = require('./gqlQueries/createUser');
 
-
 async function snippetsInit() {
   // get user authentication informaiton
   const { username, hash, exists } = await log.in();

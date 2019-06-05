@@ -1,7 +1,15 @@
 const makeRequest = require('../makeRequest');
 const { writeFile } = require('../openFile');
 
-async function getSnippet(snippetID, file) {
+/**
+ * retrieves a snippet from the database through graphql
+ * @param {String} snippetID
+ * @param {String} filename
+ *    filename is optional, file to which the snippet should be added
+ *    default to snippet title
+ */
+
+async function getSnippet(snippetID, filename) {
   const body = {
     query: `query getSnippet($snippetID: String!){
       getSnippet(snippetID: $snippetID){
@@ -24,7 +32,7 @@ async function getSnippet(snippetID, file) {
       process.exit();
     })
     .then((query) => {
-      const outfile = file || query.data.getSnippet.title;
+      const outfile = filename || query.data.getSnippet.title;
       try {
         writeFile(outfile, query.data.getSnippet.content);
       } catch (err) {
@@ -33,7 +41,7 @@ async function getSnippet(snippetID, file) {
       }
     });
 
-  process.stdout.write(`getSnippet: snippet successfully added to ${file}\n`);
+  process.stdout.write(`getSnippet: snippet successfully added to ${filename}\n`);
   process.exit();
 }
 

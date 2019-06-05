@@ -1,6 +1,14 @@
 const makeRequest = require('../makeRequest');
 const { readFile } = require('../openFile');
 
+/**
+ * reads a file and takes string of contents
+ * creates gql query to save snippet to database.
+ * @param {String} userID // to set owner
+ * @param {String} file // to retreive from
+ * @param {String} title // optional, defaults to filename
+ */
+
 async function saveSnippet(userID, file, title) {
   const content = await readFile(file).catch((err) => {
     process.stdout.write(err.message);

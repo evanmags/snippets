@@ -1,7 +1,8 @@
+/* eslint-disable no-underscore-dangle */
 const inquire = require('inquirer');
-const saveSnippet = require('../saveSnippet');
+const saveSnippet = require('../gqlQueries/saveSnippet');
 
-async function cmdSave() {
+async function cmdSave(user) {
   const { file, title } = await inquire.prompt([
     {
       type: 'input',
@@ -15,9 +16,9 @@ async function cmdSave() {
     },
   ]);
 
-  if (title === '') return saveSnippet(file, file);
+  if (title === '') return saveSnippet(user._id, file, file);
 
-  return saveSnippet(file, title);
+  return saveSnippet(user._id, file, title);
 }
 
 module.exports = cmdSave;

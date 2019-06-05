@@ -1,5 +1,5 @@
-const makeRequest = require('./makeRequest');
-const { writeFile } = require('./openFile');
+const makeRequest = require('../makeRequest');
+const { writeFile } = require('../openFile');
 
 async function getSnippet(snippetID, file) {
   const body = {

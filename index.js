@@ -1,29 +1,35 @@
 const snippetsInit = require('./modules/init');
-const getSnippet = require('./modules/gqlQueries/getSnippet');
-const saveSnippet = require('./modules/gqlQueries/saveSnippet');
+const displayHelp = require('./modules/help');
 const getUser = require('./modules/gqlQueries/getUser');
 const log = require('./modules/log');
-const listSnippets = require('./modules/list');
 const CLIcontroller = require('./modules/cmdLine');
+const runFromArgs = require('./modules/runFromArgs');
+
+/**
+ * controller function for the entrie tool
+ * parses arguments and determines course of action required.
+ * flag definitions:
+ *  ** autenticated user not required
+ *  --help: help
+ *  -init: init snippets on first use
+ *  -logout: remove user information from store
+ *  ** authentication required
+ *  -list: display all available user snippets
+ *  -g: retrieve the snippet listed as the second argument,
+ *      append to file in third arg or
+ *      create file with the same name as snippet
+ *  -s: save the snippet listed as the second argument as a new snippet
+ *      under the title listed as third argument
+ */
 
 async function main() {
-  // remove path information from argv
+  // remove path information and call to snippets from argv
   const args = process.argv.slice(2);
-  // watch for --help (help) flag
-  if (args.includes('--help')) {
-    [
-      '\nUsage:\n',
-      '\tsnippets\t\t\t => Opens CLI to get or save snippets step by step\n',
-      '\tsnippets <infile>\t\t => Saves snippet as infile name\n',
-      '\tsnippets <infile> <snippet_name> => Saves snippet as snippet_name\n',
-      '\tsnippets -g <...snippet_names>\t => Retrieves snippets\n\n',
-    ].forEach((e) => { process.stdout.write(e); });
-    process.exit();
-  }
 
-  // watch for -init (init/setup) flag
+  // watch for flags that do not require a user to be authenticated
+  // short circuit if found
+  if (args.includes('--help')) return displayHelp();
   if (args.includes('-init')) return snippetsInit();
-
   if (args.includes('-logout')) return log.out();
 
   const user = await getUser();
@@ -31,32 +37,9 @@ async function main() {
     process.stdout.write("No user exists on this computer, please run 'snippets -init'");
     process.exit(0);
   }
-
-  if (args.includes('-list')) return listSnippets(user);
-
-  // watch for -g (get) flag
-  if (args.includes('-g')) {
-    // determine correct in and out file;
-    switch (args.length) {
-      case 2:
-        return getSnippet(args[1], args[1]);
-      case 3:
-        return getSnippet(args[1], args[2]);
-      default:
-        return getSnippet(args[1]);
-    }
-  }
-
-  // default to saving snippets
-  // determine correct in and out file;
-  switch (args.length) {
-    case 1:
-      return saveSnippet(args[0], args[0]);
-    case 2:
-      return saveSnippet(args[0], args[1]);
-    default:
-      return CLIcontroller(user);
-  }
+  // short circuit checking arguments if none exist from here.
+  if (!args.length) return CLIcontroller(user);
+  return runFromArgs(user, args);
 }
 
 module.exports = main;

@@ -41,7 +41,7 @@ async function getSnippet(snippetID, filename) {
       }
     });
 
-  process.stdout.write(`getSnippet: snippet successfully added to ${filename}\n`);
+  process.stdout.write(`getSnippet: snippet successfully added to ${filename || 'new file'}\n`);
   process.exit();
 }
 

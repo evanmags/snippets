@@ -24,7 +24,13 @@ async function getUser() {
     variables,
   };
 
-  return makeRequest(body).then(({ data }) => { return data.getUser; });
+  return makeRequest(body)
+    .then(({ data }) => {
+      return data.getUser || null;
+    })
+    .catch((err) => {
+      process.stdout.write(err.message);
+    });
 }
 
 module.exports = getUser;

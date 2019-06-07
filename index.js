@@ -1,6 +1,7 @@
 const snippetsInit = require('./modules/init');
 const getSnippet = require('./modules/gqlQueries/getSnippet');
 const saveSnippet = require('./modules/gqlQueries/saveSnippet');
+const getUser = require('./modules/gqlQueries/getUser');
 const log = require('./modules/log');
 const listSnippets = require('./modules/list');
 const CLIcontroller = require('./modules/cmdLine');
@@ -23,9 +24,15 @@ async function main() {
   // watch for -init (init/setup) flag
   if (args.includes('-init')) return snippetsInit();
 
-  if (args.includes('-list')) return listSnippets();
-
   if (args.includes('-logout')) return log.out();
+
+  const user = await getUser();
+  if (!user) {
+    process.stdout.write("No user exists on this computer, please run 'snippets -init'");
+    process.exit(0);
+  }
+
+  if (args.includes('-list')) return listSnippets(user);
 
   // watch for -g (get) flag
   if (args.includes('-g')) {
@@ -48,7 +55,7 @@ async function main() {
     case 2:
       return saveSnippet(args[0], args[1]);
     default:
-      return CLIcontroller();
+      return CLIcontroller(user);
   }
 }
 

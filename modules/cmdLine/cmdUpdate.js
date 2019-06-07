@@ -1,11 +1,6 @@
 const inquire = require('inquirer');
 const updateSnippet = require('../gqlQueries/updateSnippet');
 
-function isEmptyStringArray(arr) {
-  if (arr.length === 1 && arr[0] === '') return true;
-  return false;
-}
-
 async function cmdUpdate(user) {
   const snippetChoiceList = user.snippets.length > 0
     ? user.snippets.map(({ title, _id }) => { return { name: title, value: _id }; })
@@ -51,6 +46,12 @@ async function cmdUpdate(user) {
     tags: responses.tags.split(',') || snippetToUpdate.tags,
     language: responses.language || snippetToUpdate.language,
   };
+
+  function isEmptyStringArray(arr) {
+    if ((arr.length === 1 && arr[0] === '')
+        || arr.length === 0) return true;
+    return false;
+  }
 
   Object.entries(snippetData).forEach((pair) => {
     if (pair[1] === null || isEmptyStringArray(pair[1])) delete snippetData[pair[0]];

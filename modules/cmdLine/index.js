@@ -3,11 +3,8 @@ const cmdDelete = require('./cmdDelete');
 const cmdUpdate = require('./cmdUpdate');
 const cmdSave = require('./cmdSave');
 const cmdGet = require('./cmdGet');
-const getUser = require('../gqlQueries/getUser');
 
-async function CLIcontroller() {
-  const user = await getUser();
-
+async function CLIcontroller(user) {
   const mode = await inquire.prompt([
     {
       type: 'checkbox',
@@ -29,7 +26,7 @@ async function CLIcontroller() {
     case 'get': return cmdGet(user);
     case 'update': return cmdUpdate(user);
     case 'delete': return cmdDelete(user);
-    default: return CLIcontroller();
+    default: return CLIcontroller(user);
   }
 }
 

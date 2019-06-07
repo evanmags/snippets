@@ -8,7 +8,7 @@ const makeRequest = require('../makeRequest');
 
 async function updateSnippet(snippetID, snippetData) {
   const body = {
-    query: `mutation updateSnippet($snippetID: String!, $snippetData: Snippet!){
+    query: `mutation updateSnippet($snippetID: String!, $snippetData: SnippetInput!){
       updateSnippet(snippetID: $snippetID, snippetData: $snippetData){
         _id
         title

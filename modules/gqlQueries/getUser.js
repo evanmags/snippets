@@ -12,7 +12,13 @@ async function getUser() {
   const body = {
     query: `query getUser($username: String!, $hash: String!){
       getUser(username: $username, hash: $hash){
-        snippets { title }
+        snippets { 
+          _id
+          title
+          language
+          content
+          tags
+        }
       }
     }`,
     variables,

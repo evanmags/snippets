@@ -1,12 +1,12 @@
 const inquire = require('inquirer');
 const updateSnippet = require('../gqlQueries/updateSnippet');
 
-function cmdUpdate(user) {
+async function cmdUpdate(user) {
   const snippetChoiceList = user.snippets.length > 0
     ? user.snippets.map(({ title, _id }) => { return { name: title, value: _id }; })
     : [{ name: 'You have no snippets to retrieve, press enter to exit.', value: null }];
 
-  const responses = inquire.prompt([
+  const { snippetID } = await inquire.prompt([
     {
       type: 'list',
       name: 'snippetID',
@@ -16,19 +16,38 @@ function cmdUpdate(user) {
     // need to complete this section...
     // will require some design decisions
   ]);
+  if (snippetID === null) process.exit();
 
-  const snippetToUpdate = user.snippets.filter(({ _id }) => {
-    return _id === responses.snippetID;
+  const [snippetToUpdate] = user.snippets.filter(({ _id }) => {
+    return _id === snippetID;
   });
+
+  const responses = await inquire.prompt([
+    {
+      type: 'input',
+      name: 'title',
+      message: `Enter a new title or press enter to keep "${snippetToUpdate.title}":`,
+    },
+    {
+      type: 'input',
+      name: 'tags',
+      message: `Enter a comma separated list of tags or press enter to keep "${snippetToUpdate.tags}":`,
+    },
+    {
+      type: 'input',
+      name: 'language',
+      message: `Enter a language or press enter to keep "${snippetToUpdate.language}":`,
+    },
+  ]);
 
   const snippetData = {
     title: responses.title || snippetToUpdate.title,
     content: responses.content || snippetToUpdate.content,
-    tags: responses.tags || snippetToUpdate.tags,
+    tags: responses.tags.split(',') || snippetToUpdate.tags,
     language: responses.language || snippetToUpdate.language,
   };
 
-  return updateSnippet(responses.snippetID, snippetData);
+  return updateSnippet(snippetID, snippetData);
 }
 
 module.exports = cmdUpdate;

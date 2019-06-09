@@ -1,10 +1,9 @@
 const fetch = require('node-fetch');
 
-// pass function an object with the correect structure
-// {
-//   query: String!,
-//   variables: object,
-// };
+/**
+ * structures and executes all requests to the graphQL server.
+ * @param {query: String!, variables: {...Snippet or User properties}} body
+ */
 
 async function makeRequest(body) {
   const data = await fetch('http://localhost:4000/graphql', {

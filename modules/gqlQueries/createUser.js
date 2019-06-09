@@ -29,7 +29,7 @@ async function createUser(username, hash) {
   await makeRequest(body)
     .then((res) => {
       // eslint-disable-next-line no-underscore-dangle
-      store.set({ id: res.data.createUser._id });
+      store.set({ _id: res.data.createUser._id });
     });
 }
 

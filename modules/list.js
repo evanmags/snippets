@@ -1,3 +1,8 @@
+/**
+ * prints a list of all user snippets to the console.
+ * @param {User} user
+ */
+
 async function listSnippets({ snippets }) {
   snippets.forEach(({ title }, i) => {
     process.stdout.write(`${title}\t`);

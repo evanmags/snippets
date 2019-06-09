@@ -1,6 +1,11 @@
 const log = require('./log');
 const createUser = require('./gqlQueries/createUser');
 
+/**
+ * gathers user information and creates a new user
+ * condition: there is not already a profile in use on machine.
+ */
+
 async function snippetsInit() {
   // get user authentication informaiton
   const { username, hash, exists } = await log.in();

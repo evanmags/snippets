@@ -3,6 +3,11 @@ const Store = require('data-store');
 
 const store = new Store('snippets');
 
+/**
+ * prompts user for login information
+ * sets info to store
+ */
+
 function getLoginInfo() {
   return inquire.prompt([
     {
@@ -22,6 +27,14 @@ function getLoginInfo() {
     });
 }
 
+/**
+ * log.in: checks for existing information.
+ *         if present, returns with a flag stating that it existed
+ *         otherwise, calls getLoginInfo
+ *
+ * log.out: overwrites all information in store to null.
+ */
+
 const log = {
   in: async () => {
     return store.get('username')
@@ -37,6 +50,7 @@ const log = {
     store.set({
       username: null,
       hash: null,
+      _id: null,
     });
   },
 };

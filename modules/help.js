@@ -1,3 +1,7 @@
+/**
+ * prints help to the console
+ */
+
 function displayHelp() {
   [
     '\n\tUsage:\n\n',

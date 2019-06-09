@@ -3,7 +3,8 @@ const getSnippet = require('../gqlQueries/getSnippet');
 
 /**
  * gathers information necessary to execute getSnippet query
- * @param {User} user // as passed from mongoDB
+ * @param {User} user as defined in mongodb/graphql schemas
+ * @returns {Snippet} as defined in mongodb/graphql schemas
  */
 
 async function cmdGet(user) {

@@ -1,6 +1,12 @@
 const inquire = require('inquirer');
 const updateSnippet = require('../gqlQueries/updateSnippet');
 
+/**
+ * gathers information necessary to execute updateSnippet mutation
+ * @param {User} user as defined in mongodb/graphql schemas
+ * @returns {Snippet} as defined in mongodb/graphql schemas
+ */
+
 async function cmdUpdate(user) {
   const snippetChoiceList = user.snippets.length > 0
     ? user.snippets.map(({ title, _id }) => { return { name: title, value: _id }; })

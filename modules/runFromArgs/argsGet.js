@@ -2,8 +2,8 @@ const getSnippet = require('../gqlQueries/getSnippet');
 
 /**
  * gets the snippetID and determines filename to pass to getSnippet
- * @param {User} user
- * @param {[Strings]} args
+ * @param {User} user as defined in mongodb/graphql schemas
+ * @param {[Strings]} args [flag, title, filename] pulled from commandline
  */
 
 function argsGet({ snippets }, [, title, filename]) {

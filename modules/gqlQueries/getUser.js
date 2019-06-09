@@ -16,9 +16,6 @@ async function getUser() {
         snippets { 
           _id
           title
-          language
-          content
-          tags
         }
       }
     }`,

@@ -5,8 +5,8 @@ const argsSave = require('./argsSave');
 
 /**
  * switch for command line arguments that to run snippets from passing arguments
- * @param {User} user
- * @param {[Strings]} args
+ * @param {User} user as defined in mongodb/graphql schemas
+ * @param {[Strings]} args [flag, ...] pulled from commandline
  */
 
 function runFromArgs(user, args) {

@@ -10,16 +10,16 @@ const runFromArgs = require('./modules/runFromArgs');
  * parses arguments and determines course of action required.
  * flag definitions:
  *  ** autenticated user not required
- *  --help: help
- *  -init: init snippets on first use
- *  -logout: remove user information from store
+ *    --help: help
+ *    -init: init snippets on first use
+ *    -logout: remove user information from store
  *  ** authentication required
- *  -list: display all available user snippets
- *  -g: retrieve the snippet listed as the second argument,
- *      append to file in third arg or
- *      create file with the same name as snippet
- *  -s: save the snippet listed as the second argument as a new snippet
- *      under the title listed as third argument
+ *    -list: display all available user snippets
+ *    -g: retrieve the snippet listed as the second argument,
+ *        append to file in third arg or
+ *        create file with the same name as snippet
+ *    -s: save the snippet listed as the second argument as a new snippet
+ *        under the title listed as third argument
  */
 
 async function main() {

@@ -4,6 +4,12 @@ const cmdUpdate = require('./cmdUpdate');
 const cmdSave = require('./cmdSave');
 const cmdGet = require('./cmdGet');
 
+/**
+ * switch controller for the CLI when not run by passing arguments.
+ * @param {*} user
+ * @returns {null} function call or runs itself recurrsively
+ */
+
 async function CLIcontroller(user) {
   const mode = await inquire.prompt([
     {

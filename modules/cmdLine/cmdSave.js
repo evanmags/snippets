@@ -2,6 +2,12 @@
 const inquire = require('inquirer');
 const saveSnippet = require('../gqlQueries/saveSnippet');
 
+/**
+ * gathers information necessary to execute saveSnippet query
+ * @param {User} user as defined in mongodb/graphql schemas
+ * @returns {Snippet} as defined in mongodb/graphql schemas
+ */
+
 async function cmdSave(user) {
   const { file, title } = await inquire.prompt([
     {

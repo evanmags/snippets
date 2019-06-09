@@ -3,7 +3,8 @@ const deleteSnippet = require('../gqlQueries/deleteSnippet');
 
 /**
  * gathers the query information necessary to execute the deleteSnippet mutation
- * @param {User} user // as passed from mongoDB
+ * @param {User} user  user as defined in mongodb/graphql schemas
+ * @returns {Snippet} as defined in mongodb/graphql schemas
  */
 
 async function cmdDelete(user) {

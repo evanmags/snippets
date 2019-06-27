@@ -20,6 +20,16 @@ async function cmdSave(user) {
       name: 'title',
       message: 'What would you like to name your snippet? (press <enter> to keep filename)',
     },
+    {
+      type: 'input',
+      name: 'tags',
+      message: 'Enter a comma separated list of tags (press <enter> to pass):',
+    },
+    {
+      type: 'input',
+      name: 'language',
+      message: 'Enter a language for this snippet (press <enter> to pass):',
+    },
   ]);
 
   if (title === '') return saveSnippet(user._id, file, file);
